@@ -1,26 +1,151 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
+@custom-variant dark (&:is(.dark *));
+
+/* ── Di Spa Brand Tokens ── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary:             #B96B78;
+  --primary-dark:        #A85A66;
+  --primary-foreground:  #FFFFFF;
+
+  --secondary:           #6F8E7A;
+  --secondary-foreground:#FFFFFF;
+
+  --accent:              #8B4A56;
+  --accent-foreground:   #FFFFFF;
+
+  --background:          #FCEEEC;
+  --surface:             #FFFFFF;
+  --surface-muted:       #F3DCE0;
+
+  --foreground:          #3A2A2E;
+  --muted-foreground:    #8A7478;
+  --muted:               #F3DCE0;
+
+  --rating:              #D6486A;
+  --border:              #EAD9DA;
+  --input:               #EAD9DA;
+  --ring:                #B96B78;
+
+  --card:                #FFFFFF;
+  --card-foreground:     #3A2A2E;
+  --popover:             #FFFFFF;
+  --popover-foreground:  #3A2A2E;
+
+  --destructive:         #C0392B;
+  --destructive-foreground: #FFFFFF;
+
+  --open:                #16a34a;
+  --open-bg:             #f0fdf4;
+
+  --radius: 1.25rem;
+
+  /* sidebar — không dùng dark, giữ brand */
+  --sidebar:             #FFFFFF;
+  --sidebar-foreground:  #3A2A2E;
+  --sidebar-primary:     #B96B78;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent:      #F3DCE0;
+  --sidebar-accent-foreground: #3A2A2E;
+  --sidebar-border:      #EAD9DA;
+  --sidebar-ring:        #B96B78;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary:            var(--primary);
+  --color-primary-dark:       var(--primary-dark);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary:          var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent:             var(--accent);
+  --color-accent-foreground:  var(--accent-foreground);
+  --color-background:         var(--background);
+  --color-surface:            var(--surface);
+  --color-surface-muted:      var(--surface-muted);
+  --color-foreground:         var(--foreground);
+  --color-muted:              var(--muted);
+  --color-muted-foreground:   var(--muted-foreground);
+  --color-rating:             var(--rating);
+  --color-border:             var(--border);
+  --color-input:              var(--input);
+  --color-ring:               var(--ring);
+  --color-card:               var(--card);
+  --color-card-foreground:    var(--card-foreground);
+  --color-popover:            var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-destructive:        var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-open:               var(--open);
+  --color-open-bg:            var(--open-bg);
+  --color-sidebar:            var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary:    var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent:     var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border:     var(--sidebar-border);
+  --color-sidebar-ring:       var(--sidebar-ring);
+
+  --radius-sm:   calc(var(--radius) * 0.5);
+  --radius-md:   calc(var(--radius) * 0.75);
+  --radius-lg:   var(--radius);
+  --radius-xl:   calc(var(--radius) * 1.25);
+  --radius-pill: 9999px;
+
+  --font-sans:    var(--font-be-vietnam, "Be Vietnam Pro"), system-ui, sans-serif;
+  --font-display: var(--font-playfair, "Playfair Display"), Georgia, serif;
+  --font-mono:    ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  /* ẩn thanh cuộn ngang trong row scroll */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  .font-display  { font-family: var(--font-display); }
+
+  .bg-surface        { background-color: var(--surface); }
+  .bg-surface-muted  { background-color: var(--surface-muted); }
+
+  .text-rating       { color: var(--rating); }
+  .bg-rating         { background-color: var(--rating); }
+
+  .rounded-card  { border-radius: var(--radius); }
+  .rounded-pill  { border-radius: 9999px; }
+
+  /* card shadow — rất nhẹ, không viền cứng */
+  .shadow-card {
+    box-shadow: 0 2px 12px 0 rgba(58, 42, 46, 0.06);
+  }
+  .shadow-nav {
+    box-shadow: 0 -2px 20px 0 rgba(58, 42, 46, 0.08);
+  }
+  .shadow-floating {
+    box-shadow: 0 4px 24px 0 rgba(185, 107, 120, 0.22);
+  }
+
+  /* gradient chính của banner/membership */
+  .gradient-brand {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  }
+  .gradient-brand-soft {
+    background: linear-gradient(135deg, #F3DCE0 0%, #EAD9DA 100%);
+  }
 }
